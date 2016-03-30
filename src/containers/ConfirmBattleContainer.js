@@ -9,6 +9,7 @@ export default class ConfirmBattleContainer extends React.Component {
             isLoading: true,
             playersInfo: []
         }
+        console.log(props)
     }
 
     componentDidMount () {
