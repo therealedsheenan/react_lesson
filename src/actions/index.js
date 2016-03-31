@@ -1,14 +1,23 @@
+let playerId = 0
 
-export const addPlayer = ( text ) => {
+export const AddPlayer = ( name ) => {
     return {
         type: 'ADD_PLAYER',
-        text
+        id: playerId++,
+        name
     }
 }
 
-export const IntiateBattle = ( users ) => {
+export const IntiateBattle = ( players ) => {
     return {
         type: 'INITIATE_BATTLE',
-        users
+        players
+    }
+}
+
+export const GetResults = ( result ) => {
+    return {
+        type: 'GET_RESULTS',
+        result
     }
 }
