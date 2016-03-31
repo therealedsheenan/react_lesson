@@ -1,7 +1,7 @@
 import React from 'react'
 let PropTypes = React.PropTypes
 
-let Prompt = props => {
+let Prompt = ( props ) => {
     return (
         <div className="jumbotron col-sm-6 col-sm-offset-3 text-center">
             <h1>{props.header}</h1>
