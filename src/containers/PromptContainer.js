@@ -1,47 +1,10 @@
 import React from 'react'
-import { connect } from 'react-redux';
+import { connect } from 'react-redux'
+import { Router, Route, IndexRoute, Link, hashHistory } from 'react-router'
+
+import store from '../reducers'
 import { AddPlayer } from '../actions'
-import { bindActionCreators } from 'redux';
-
 import Prompt from '../components/Prompt'
-
-export default class PromptContainer extends React.Component {
-
-    constructor ( props ) {
-        super( props )
-    }
-
-    handleSubmitUser ( e ) {
-        e.preventDefault();
-
-        if (this.props.routeParams.playerOne) {
-            this.context.router.push({
-                pathname: '/battle',
-                query: {
-                    playerOne: this.props.routeParams.playerOne,
-                    playerTwo: this.props.username,
-                }
-            })
-        } else {
-            this.context.router.push('/playerTwo/' + this.props.username)
-        }
-    }
-
-    render () {
-        return (
-            <Prompt
-                onSubmitUser={ this.handleSubmitUser.bind( this ) }
-                header={ this.props.route.header }
-                username={ this.props.username }
-                onUpdateUser={ this.props.onUpdateUser }
-                />
-        )
-    }
-}
-
-PromptContainer.contextTypes = {
-    router: React.PropTypes.object.isRequired
-}
 
 const mapStateToProps = ( state, ownProps ) => {
     return {
@@ -50,15 +13,37 @@ const mapStateToProps = ( state, ownProps ) => {
     }
 }
 
+const getPlayer = ( state ) => {
+    return state.players
+}
+
 const mapDispatchToProps = ( dispatch, ownProps ) => {
     return {
         onUpdateUser: ( event ) => {
             dispatch( AddPlayer( event.target.value ) )
+        },
+
+        onSubmitUser: ( e ) => {
+            console.log(ownProps)
+            if( ownProps.params.playerOne )  {
+
+                hashHistory.push({
+                    pathname: '/battle',
+                    query: {
+                        playerOne: ownProps.params.playerOne,
+                        playerTwo: getPlayer( store.getState() ).player[0].name,
+                    }
+                })
+            } else {
+                hashHistory.push('/playerTwo/' + getPlayer( store.getState() ).player[0].name )
+            }
         }
     }
 }
 
-export default connect(
+const PromptContainer = connect(
     mapStateToProps,
     mapDispatchToProps
-)( PromptContainer )
+)( Prompt )
+
+export default PromptContainer
