@@ -21,6 +21,7 @@ export default class ConfirmBattleContainer extends React.Component {
                 })
             }.bind( this ))
     }
+
     handleInitiateBattle () {
         this.context.router.push({
             pathname: '/results',
@@ -31,12 +32,12 @@ export default class ConfirmBattleContainer extends React.Component {
     }
 
     render () {
-      return (
-        <ConfirmBattle
-            isLoading={ this.state.isLoading }
-            onInitiateBattle={ this.handleInitiateBattle.bind( this ) }
-            playersInfo={ this.state.playersInfo } />
-      )
+        return (
+            <ConfirmBattle
+                isLoading={ this.state.isLoading }
+                onInitiateBattle={ this.handleInitiateBattle.bind( this ) }
+                playersInfo={ this.state.playersInfo } />
+        )
     }
 }
 
